@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  api:
+    image: api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+
+  auth:
+    image: auth
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+
+  frontend:
+    image: frontend
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+      
