@@ -19,7 +19,7 @@ function convertDate(date_number){
 const RegistrationForm = ({ registration, usage, handleChange, handleRegistrationEditClick,
   handleEditCancelClick, handleRegistrationSaveClick, events, customers,  
   handleRegistrationDeleteClick }) => {
-  let rdate = convertDate(registration.registration_date);
+  let rdate = convertDate(registration.registrationDate);
   return (
     <div id='registration-form'  className='card bg-light' hidden={ usage === 'none'} >
       <div>
@@ -48,7 +48,7 @@ const RegistrationForm = ({ registration, usage, handleChange, handleRegistratio
             </tr>
             <tr>
               <td>RegistrationDate:</td>
-              <td><input type={'date'} name={'registration_date'} onChange={handleChange}
+              <td><input type={'date'} name={'registrationDate'} onChange={handleChange}
                 placeholder={'Registration Date'}
                 value={rdate} disabled={usage === 'none' || usage === 'view'} /></td>
             </tr>
@@ -77,7 +77,7 @@ RegistrationForm.propTypes = {
   registration: PropTypes.shape({
     event_id: PropTypes.string.isRequired,
     customer_id: PropTypes.string.isRequired,
-    registration_date: PropTypes.number.isRequired
+    registrationDate: PropTypes.number.isRequired
   }).isRequired
 }
 
@@ -96,7 +96,7 @@ const mapDispatchToProps = (dispatch) => {
     handleChange: (e) => {
       const field_name = e.currentTarget.name;
       let field_value = '';
-      if(field_name === 'registration_date'){
+      if(field_name === 'registrationDate'){
         field_value = new Date(e.currentTarget.value).getTime();
       }else{
         field_value = e.currentTarget.value;

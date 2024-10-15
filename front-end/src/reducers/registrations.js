@@ -2,8 +2,8 @@ import RestAPI from '../rest';
 
 
 const initial = [
-    { id: 1, event_id: 1, customer_id: 1, registration_date: '2019-01-01', notes: 'looking forward to the event' },
-    { id: 2, event_id: 1, customer_id: 2, registration_date: '2019-01-05', notes: 'is parking available?' }];
+    { id: 1, event_id: 1, customer_id: 1, registrationDate: '2019-01-01', notes: 'looking forward to the event' },
+    { id: 2, event_id: 1, customer_id: 2, registrationDate: '2019-01-05', notes: 'is parking available?' }];
 
 const registrations = (state = initial, action, data) => {
     switch (action.type) {

@@ -2,7 +2,7 @@ const initial = {
   usage: 'none', 
   customer: { id: "", name: "", email: "" } ,
   event: { id: "-1", code: "", title: "", description: "" },
-  registration: { id: "-1", event_id: "-1", customer_id: "-1", registration_date: -1, notes: "" }
+  registration: { id: "-1", event_id: "-1", customer_id: "-1", registrationDate: -1, notes: "" }
 };
 
 const formState = (state = initial, action, data) => {
@@ -66,7 +66,7 @@ const formState = (state = initial, action, data) => {
 
     case 'UPDATE_REGISTRATION_FORM_USAGE': {
       let usage = { usage: action.usage };
-      let new_registration = { registration: { id: -1, event_id: "-1", customer_id: "-1", registration_date: -1, notes: "" } };
+      let new_registration = { registration: { id: -1, event_id: "-1", customer_id: "-1", registrationDate: -1, notes: "" } };
 
       console.log("UPDATE_REGISTRATION_FORM_USAGE: (" + action.usage + ") action.registration: " + JSON.stringify(action.registration))
 
@@ -74,7 +74,7 @@ const formState = (state = initial, action, data) => {
         new_registration = { registration: Object.assign({}, action.registration) };
       } else {
         let id = Math.floor(1000 * (1 + Math.random(Date.now())));
-        new_registration = { registration: { id: id, event_id: "-1", customer_id: "-1", registration_date: -1, notes: "" } };
+        new_registration = { registration: { id: id, event_id: "-1", customer_id: "-1", registrationDate: -1, notes: "" } };
       }
 
       return Object.assign({}, state, new_registration, usage);

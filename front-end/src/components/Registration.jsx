@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Registration = ({ onClick, selectedId, registration, event_name, customer_name }) => {
-  let date = new Date(registration.registration_date).toISOString().substring(0,10); 
+  let date = new Date(registration.registrationDate).toISOString().substring(0,10); 
   return (
     <tr className={registration.id === selectedId ? "selected" : ""}
 		    onClick={(e) => onClick(e, registration.id)} >
