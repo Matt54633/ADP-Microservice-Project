@@ -37,7 +37,9 @@ public class EndpointFilter implements Filter {
 			return;
 		}
 
-		if (!uri.equals("/api/customers")) {
+		if (!uri.startsWith("/api/events") 
+	       && !uri.startsWith("/api/registrations")
+	       && !uri.startsWith("/api/customers")) {
 
 			chain.doFilter(request, response);
 
