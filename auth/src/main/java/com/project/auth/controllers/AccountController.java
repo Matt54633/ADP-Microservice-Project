@@ -20,6 +20,9 @@ import com.project.auth.models.Token;
 import com.project.auth.utilities.CustomerSerializer;
 import com.project.auth.utilities.JwtHelper;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 @RestController
 @RequestMapping("/")
 public class AccountController {
@@ -33,6 +36,7 @@ public class AccountController {
 
     @PostMapping("/token")
     public ResponseEntity<?> getToken(@RequestBody Customer customer) {
+
         String name = customer.getName();
         String password = customer.getPassword();
         Boolean isValid = false;
@@ -85,9 +89,30 @@ public class AccountController {
 
     // Function to check customer in customer store
     private Customer checkCustomer(String name) {
+        InetAddress ip;
+        String hostname = "";
+        try
+        {
+            ip = InetAddress.getLocalHost();
+            hostname = ip.getHostName();
+            System.out.println("Your current IP address : " + ip);
+            System.out.println("Your current Hostname : " + hostname);
+        }catch(
+        UnknownHostException e)
+        {
+            e.printStackTrace();
+        }
+
         try {
 
-            URL url = new URI("http://localhost:8080/api/customers/byname/" + name).toURL();
+            URL url = null;
+
+            if (hostname.contains("local")) {
+                url = new URI("http://localhost:8080/api/customers/byname/" + name).toURL();
+            } else {
+                url = new URI("http://api:8080/api/customers/byname/" + name).toURL();
+            }
+
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/json");
@@ -131,7 +156,29 @@ public class AccountController {
     private void createCustomer(String customer) {
 
         try {
-            URL url = new URI("http://localhost:8080/api/customers").toURL();
+            InetAddress ip;
+            String hostname = "";
+            try
+            {
+                ip = InetAddress.getLocalHost();
+                hostname = ip.getHostName();
+                System.out.println("Your current IP address : " + ip);
+                System.out.println("Your current Hostname : " + hostname);
+            }catch(
+            UnknownHostException e)
+            {
+                e.printStackTrace();
+            }
+
+
+            URL url = null;
+
+            if (hostname.contains("local")) {
+                url = new URI("http://localhost:8080/api/customers" ).toURL();
+            } else {
+                url = new URI("http://api:8080/api/customers").toURL();
+            }
+
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod("POST");
