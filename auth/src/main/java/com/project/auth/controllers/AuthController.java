@@ -11,7 +11,7 @@ public class AuthController {
     // Un-authenticated health check
 
     @GetMapping
-    public String heartbeat() {
-        return "Auth service is running!";
+    public String healthCheck() {
+        return "Auth Service is running!";
     }
 }
