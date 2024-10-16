@@ -8,8 +8,6 @@ const isLocalhost = () => {
   return hostname.includes('local')
 }
 
-console.log('isLocalhost:', isLocalhost())
-
 const targetApi = isLocalhost() ? 'http://localhost:8080' : 'http://api:8080'
 const targetAuth = isLocalhost() ? 'http://localhost:8081' : 'http://auth:8081'
 

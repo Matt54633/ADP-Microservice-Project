@@ -27,12 +27,21 @@ import java.net.UnknownHostException;
 @RequestMapping("/")
 public class AccountController {
 
-    // Responds to requests for JWT Tokens
-    // Takes username and password as parameters
-    // Checks the customer exists in the customer store (call to
-    // localhost:8080/api/customers)
-    // Check password matches the one listed for the customer in the customer store
-    // Returns a JWT token suitable for connecting to the data service
+    // Get the Host for detecting whether running locally or in Docker
+    private String getHost() {
+        InetAddress ip;
+        String hostname = "";
+
+        try {
+            ip = InetAddress.getLocalHost();
+            hostname = ip.getHostName();
+
+            return hostname;
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @PostMapping("/token")
     public ResponseEntity<?> getToken(@RequestBody Customer customer) {
@@ -44,11 +53,9 @@ public class AccountController {
         // Check customer exists
         Customer storedCustomer = checkCustomer(name);
 
-        // Check password is valid
         if (storedCustomer != null)
             isValid = checkPassword(name, password);
 
-        // Create Token if valid
         if (isValid == true) {
             Token token = createToken();
 
@@ -89,25 +96,11 @@ public class AccountController {
 
     // Function to check customer in customer store
     private Customer checkCustomer(String name) {
-        InetAddress ip;
-        String hostname = "";
-        try
-        {
-            ip = InetAddress.getLocalHost();
-            hostname = ip.getHostName();
-            System.out.println("Your current IP address : " + ip);
-            System.out.println("Your current Hostname : " + hostname);
-        }catch(
-        UnknownHostException e)
-        {
-            e.printStackTrace();
-        }
 
         try {
 
             URL url = null;
-
-            if (hostname.contains("local")) {
+            if (getHost().contains("local")) {
                 url = new URI("http://localhost:8080/api/customers/byname/" + name).toURL();
             } else {
                 url = new URI("http://api:8080/api/customers/byname/" + name).toURL();
@@ -156,25 +149,10 @@ public class AccountController {
     private void createCustomer(String customer) {
 
         try {
-            InetAddress ip;
-            String hostname = "";
-            try
-            {
-                ip = InetAddress.getLocalHost();
-                hostname = ip.getHostName();
-                System.out.println("Your current IP address : " + ip);
-                System.out.println("Your current Hostname : " + hostname);
-            }catch(
-            UnknownHostException e)
-            {
-                e.printStackTrace();
-            }
-
-
             URL url = null;
 
-            if (hostname.contains("local")) {
-                url = new URI("http://localhost:8080/api/customers" ).toURL();
+            if (getHost().contains("local")) {
+                url = new URI("http://localhost:8080/api/customers").toURL();
             } else {
                 url = new URI("http://api:8080/api/customers").toURL();
             }
